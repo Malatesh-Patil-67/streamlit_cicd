@@ -1,10 +1,9 @@
 """
 This module provides functions to retrieve and analyze historical stock data.
 """
-
-import streamlit as st
-import requests
 import pandas as pd
+import requests
+import streamlit as st
 import plotly.graph_objs as go
 
 API_KEY = st.secrets["api"]["iex_key"]
@@ -85,7 +84,8 @@ def app():
         with col1:
             st.metric("Close Price", f"${latest_close_price:.2f}")
         with col2:
-            st.metric("Price Difference (YoY)", f"${price_difference:.2f}", f"{percentage_difference:+.2f}%")
+            st.metric("Price Difference (YoY)", f"${price_difference:.2f}",
+                       f"{percentage_difference:+.2f}%")
         with col3:
             st.metric("52-Week High", f"${max_52_week_high:.2f}")
         with col4:
@@ -103,7 +103,8 @@ def app():
             )
         ]
     )
-    candlestick_chart.update_layout(title=f"{symbol} Candlestick Chart", xaxis_rangeslider_visible=False)
+    candlestick_chart.update_layout(title=f"{symbol} Candlestick Chart", 
+                                    xaxis_rangeslider_visible=False)
     st.plotly_chart(candlestick_chart, use_container_width=True)
 
     st.subheader("Summary")
