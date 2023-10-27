@@ -26,12 +26,12 @@ jobs:
           pip install -r requirements.txt
           pylint data.py
         working-directory: ./  
-        
+
       - name: Test Streamlit App
         run: |
           pip install streamlit
-          pip install streamlit-pandas-profiling  # Install for testing
-          streamlit test test_data.py  # Replace with the correct path to your test file
+          pip install streamlit-pandas-profiling   
+          streamlit test test_data.py  
         working-directory: ./
       
 
