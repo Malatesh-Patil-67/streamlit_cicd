@@ -21,6 +21,20 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Run Pylint
+        run: |
+          pip install -r requirements.txt
+          pylint data.py
+        working-directory: ./  
+        
+      - name: Test Streamlit App
+        run: |
+          pip install streamlit
+          pip install streamlit-pandas-profiling  # Install for testing
+          streamlit test test_data.py  # Replace with the correct path to your test file
+        working-directory: ./
+      
+
       - name: Build Docker image
         run: docker build -t my-streamlit-app:latest .
         working-directory: .  
