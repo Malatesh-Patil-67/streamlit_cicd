@@ -1,3 +1,5 @@
+# data.py
+
 import streamlit as st
 import requests
 import pandas as pd
@@ -6,14 +8,22 @@ import plotly.graph_objs as go
 API_KEY = st.secrets["api"]["iex_key"]
 API_BASE_URL = "https://cloud.iexapis.com/stable/"
 
-
-
 def get_stock_data(symbol, time_range="5y"):
+    """
+    Retrieve historical stock data for a given symbol.
+
+    Args:
+        symbol (str): The stock symbol (e.g., AAPL for Apple Inc.).
+        time_range (str): The time range for data (default is "5y" for 5 years).
+
+    Returns:
+        pd.DataFrame: A DataFrame containing historical stock data.
+    """
     params = {
         "token": API_KEY
     }
 
-    response = requests.get(API_BASE_URL + f"stock/{symbol}/chart/{time_range}", params=params)
+    response = requests.get(API_BASE_URL + f"stock/{symbol}/chart/{time_range}", params=params, timeout=10)
     data = response.json()
 
     if "error" in data:
@@ -27,18 +37,27 @@ def get_stock_data(symbol, time_range="5y"):
     stock_data.columns = ["Open", "High", "Low", "Close", "Volume"]
     return stock_data
 
-
-
 def calculate_price_difference(stock_data):
+    """
+    Calculate the price difference and percentage difference based on stock data.
+
+    Args:
+        stock_data (pd.DataFrame): A DataFrame containing historical stock data.
+
+    Returns:
+        tuple: A tuple containing the price difference and percentage difference.
+    """
     latest_price = stock_data.iloc[-1]["Close"]
     previous_year_price = stock_data.iloc[-252]["Close"] if len(stock_data) > 252 else stock_data.iloc[0]["Close"]
     price_difference = latest_price - previous_year_price
     percentage_difference = (price_difference / previous_year_price) * 100
     return price_difference, percentage_difference
 
-
 def app():
-    #-- BOLIERPLATE --#
+    """
+    Main Streamlit application function.
+    """
+    # -- BOLIERPLATE -- #
     st.set_page_config(page_title="Stock Dashboard", layout="wide", page_icon="📈")
     hide_menu_style = "<style> footer {visibility: hidden;} </style>"
     st.markdown(hide_menu_style, unsafe_allow_html=True)
@@ -56,7 +75,6 @@ def app():
             max_52_week_high = stock_data["High"].tail(252).max()
             min_52_week_low = stock_data["Low"].tail(252).min()
 
-        
         col1, col2, col3, col4 = st.columns(4)
         with col1:
             st.metric("Close Price", f"${latest_close_price:.2f}")
@@ -77,7 +95,5 @@ def app():
 
     st.download_button("Download Stock Data Overview", stock_data.to_csv(index=True), file_name=f"{symbol}_stock_data.csv", mime="text/csv")
 
-
 if __name__ == "__main__":
     app()
-
