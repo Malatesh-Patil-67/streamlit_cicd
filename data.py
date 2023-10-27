@@ -2,9 +2,11 @@
 This module provides functions to retrieve and analyze historical stock data.
 """
 
+import streamlit as st
 import requests
 import pandas as pd
-import streamlit as st
+import plotly.graph_objs as go  
+
 
 API_KEY = st.secrets["api"]["iex_key"]
 API_BASE_URL = "https://cloud.iexapis.com/stable/"
@@ -24,7 +26,9 @@ def get_stock_data(symbol, time_range="5y"):
         "token": API_KEY
     }
 
-    response = requests.get(API_BASE_URL + f"stock/{symbol}/chart/{time_range}", params=params, timeout=10)
+    response = requests.get(
+    API_BASE_URL + f"stock/{symbol}/chart/{time_range}", params=params, timeout=10
+    )
     data = response.json()
 
     if "error" in data:
@@ -49,7 +53,11 @@ def calculate_price_difference(stock_data):
         tuple: A tuple containing the price difference and percentage difference.
     """
     latest_price = stock_data.iloc[-1]["Close"]
-    previous_year_price = stock_data.iloc[-252]["Close"] if len(stock_data) > 252 else stock_data.iloc[0]["Close"]
+    previous_year_price = (
+    stock_data.iloc[-252]["Close"]
+    if len(stock_data) > 252
+    else stock_data.iloc[0]["Close"]
+)
     price_difference = latest_price - previous_year_price
     percentage_difference = (price_difference / previous_year_price) * 100
     return price_difference, percentage_difference
