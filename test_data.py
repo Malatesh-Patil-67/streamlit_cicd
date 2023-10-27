@@ -18,7 +18,7 @@ def test_stock_data_app():
 
     # Start the Streamlit app
     with st:
-        app()  # Call y Streamlit app
+        app()  # Call  Streamlit app
 
     # Set a specific symbol using the selectbox
     st.selectbox("Select a stock symbol:", "AAPL")
