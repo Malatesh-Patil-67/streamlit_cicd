@@ -93,15 +93,16 @@ def app():
 
     st.subheader("Candlestick Chart")
     candlestick_chart = go.Figure(
-        data=[
-            go.Candlestick(
-                x=stock_data.index,
-                open=stock_data['Open'],
-                high=stock_data['High'],
-                low=stock_data['Low'],
-                close=stock_data['Close'])]) 
+    data=[
+        go.Candlestick(
+            x=stock_data.index,
+            open=stock_data['Open'],
+            high=stock_data['High'],
+            low=stock_data['Low'],
+            close=stock_data['Close'])
+    ])
     candlestick_chart.update_layout(title=f"{symbol} Candlestick Chart",
-                                    xaxis_rangeslider_visible=False)
+                                xaxis_rangeslider_visible=False)
     st.plotly_chart(candlestick_chart, use_container_width=True)
 
     st.subheader("Summary")
