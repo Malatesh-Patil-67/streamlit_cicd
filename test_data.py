@@ -1,15 +1,33 @@
-# test_data.py
+import subprocess
+import requests
+import time
 import pytest
-from data import app
+import threading
+
+# Start the Streamlit app as a subprocess
+app_process = None
+
+def start_app():
+    global app_process
+    app_process = subprocess.Popen(["streamlit", "run", "data.py"])
+
+# Fixture to start the Streamlit app
+@pytest.fixture(autouse=True, scope="session")
+def run_app():
+    thread = threading.Thread(target=start_app)
+    thread.start()
+    time.sleep(5)  # Wait for the app to start
+    yield
+    app_process.terminate()
 
 def test_stock_data_app():
-    client = app.test_client()
-
-    response = client.get("/")
+    # Test Case 1: Check if the app loads without errors
+    response = requests.get("http://localhost:8501")
     assert response.status_code == 200
-    assert b"Stock Dashboard" in response.data
+    assert "Stock Dashboard" in response.text
 
-    response = client.get("/?symbol=AAPL")
+    # Test Case 2: Check if the app updates with user input
+    response = requests.get("http://localhost:8501?symbol=AAPL")
     assert response.status_code == 200
-    assert b"Close Price" in response.data
-    assert b"52-Week High" in response.data
+    assert "Close Price" in response.text
+    assert "52-Week High" in response.text
