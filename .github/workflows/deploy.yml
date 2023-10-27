@@ -3,7 +3,7 @@ name: Deploy Streamlit App
 on:
   push:
     branches:
-      - main # Change this to your main branch
+      - main
 
 jobs:
   deploy:
@@ -16,18 +16,18 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9 
+          python-version: 3.9
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-        working-directory: streamlit # Update the path
+        working-directory: ./  
 
       - name: Deploy to Streamlit Sharing
         run: |
           pip install streamlit
-          streamlit deploy data.py --secrets secrets.toml
-        working-directory: streamlit # Update the path
+          streamlit deploy data.py --secrets .streamlit/secrets.toml  # Use the path to secrets.toml
+        working-directory: ./  
         env:
           STREAMLIT_SECRETS: ${{ secrets.STREAMLIT_SECRETS }}
