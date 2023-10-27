@@ -100,8 +100,7 @@ def app():
                 high=stock_data['High'],
                 low=stock_data['Low'],
                 close=stock_data['Close']
-            )
-        ]) 
+            )]) 
     candlestick_chart.update_layout(title=f"{symbol} Candlestick Chart",
                                     xaxis_rangeslider_visible=False)
     st.plotly_chart(candlestick_chart, use_container_width=True)
