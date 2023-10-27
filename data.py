@@ -6,7 +6,6 @@ import streamlit as st
 import requests
 import pandas as pd
 import plotly.graph_objs as go  
-
 API_KEY = st.secrets["api"]["iex_key"]
 API_BASE_URL = "https://cloud.iexapis.com/stable/"
 
@@ -88,7 +87,7 @@ def app():
             st.metric("Close Price", f"${latest_close_price:.2f}")
         with col2:
             st.metric("Price Difference (YoY)", f"${price_difference:.2f}", 
-                      f"{percentage_difference:+.2f}%")
+            f"{percentage_difference:+.2f}%")
         with col3:
             st.metric("52-Week High", f"${max_52_week_high:.2f}")
         with col4:
@@ -106,13 +105,15 @@ def app():
         )
     ]
 )
-    candlestick_chart.update_layout(title=f"{symbol} Candlestick Chart", xaxis_rangeslider_visible=False)
+    candlestick_chart.update_layout(title=f"{symbol} Candlestick Chart", 
+    xaxis_rangeslider_visible=False)
     st.plotly_chart(candlestick_chart, use_container_width=True)
 
     st.subheader("Summary")
     st.dataframe(stock_data.tail())
 
-    st.download_button("Download Stock Data Overview", stock_data.to_csv(index=True), file_name=f"{symbol}_stock_data.csv", mime="text/csv")
+    st.download_button("Download Stock Data Overview", stock_data.to_csv(index=True),
+    file_name=f"{symbol}_stock_data.csv", mime="text/csv")
 
 if __name__ == "__main__":
     app()
