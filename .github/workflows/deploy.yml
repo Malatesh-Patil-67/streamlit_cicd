@@ -1,4 +1,4 @@
-name: Deploy Streamlit App
+name: CI/CD for Streamlit App
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,17 +19,18 @@ jobs:
           python-version: 3.9
 
       - name: Install dependencies
-        run: |
-         
-          pip install -r requirements.txt
-        working-directory: ./  
+        run: pip install -r requirements.txt
 
-      - name: Deploy to Streamlit Sharing
+      - name: Build Docker image
+        run: docker build -t my-streamlit-app:latest .
+        working-directory: .  
+
+      - name: Push Docker image to Docker Hub
         run: |
-          pip install streamlit
-          streamlit login -- -u ${{secrets.STREAMLIT_USERNAME }} -p ${{secrets.STREAMLIT_PASSWORD }}
-          streamlit deploy data.py --secrets .streamlit/secrets.toml
-          
-        working-directory: ./  
-        env:
-          STREAMLIT_SECRETS: ${{ secrets.STREAMLIT_SECRETS }}
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker tag my-streamlit-app:latest ${{ secrets.DOCKERHUB_USERNAME }}/my-streamlit-app:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-streamlit-app:latest
+
+      - name: Deploy to Docker
+        run: docker run -d -p 8503:8501 ${{ secrets.DOCKERHUB_USERNAME }}/my-streamlit-app:latest
+
