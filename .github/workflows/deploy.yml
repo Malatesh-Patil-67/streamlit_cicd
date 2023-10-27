@@ -27,7 +27,9 @@ jobs:
       - name: Deploy to Streamlit Sharing
         run: |
           pip install streamlit
-          streamlit deploy data.py --secrets .streamlit/secrets.toml  # Use the path to secrets.toml
+          streamlit login -- -u ${{secrets.STREAMLIT_USERNAME }} -p ${{secrets.STREAMLIT_PASSWORD }}
+          streamlit deploy data.py --secrets .streamlit/secrets.toml
+          
         working-directory: ./  
         env:
           STREAMLIT_SECRETS: ${{ secrets.STREAMLIT_SECRETS }}
