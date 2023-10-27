@@ -3,8 +3,8 @@ This module provides functions to retrieve and analyze historical stock data.
 """
 import pandas as pd
 import requests
-import streamlit as st
 import plotly.graph_objs as go
+import streamlit as st
 
 API_KEY = st.secrets["api"]["iex_key"]
 API_BASE_URL = "https://cloud.iexapis.com/stable/"
@@ -104,7 +104,7 @@ def app():
         ]
     )
     candlestick_chart.update_layout(title=f"{symbol} Candlestick Chart", 
-                                    xaxis_rangeslider_visible=False)
+    xaxis_rangeslider_visible=False)
     st.plotly_chart(candlestick_chart, use_container_width=True)
 
     st.subheader("Summary")
