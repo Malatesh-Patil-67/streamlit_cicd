@@ -5,7 +5,7 @@ This module provides functions to retrieve and analyze historical stock data.
 import streamlit as st
 import requests
 import pandas as pd
-import plotly.graph_objs as go  
+import plotly.graph_objs as go
 
 API_KEY = st.secrets["api"]["iex_key"]
 API_BASE_URL = "https://cloud.iexapis.com/stable/"
@@ -21,12 +21,11 @@ def get_stock_data(symbol, time_range="5y"):
     Returns:
         pd.DataFrame: A DataFrame containing historical stock data.
     """
-    params = {
-        "token": API_KEY
-    }
-
+    params = {"token": API_KEY}
     response = requests.get(
-    API_BASE_URL + f"stock/{symbol}/chart/{time_range}", params=params, timeout=10
+        API_BASE_URL + f"stock/{symbol}/chart/{time_range}",
+        params=params,
+        timeout=10
     )
     data = response.json()
 
@@ -53,10 +52,10 @@ def calculate_price_difference(stock_data):
     """
     latest_price = stock_data.iloc[-1]["Close"]
     previous_year_price = (
-    stock_data.iloc[-252]["Close"]
-    if len(stock_data) > 252
-    else stock_data.iloc[0]["Close"]
-)
+        stock_data.iloc[-252]["Close"]
+        if len(stock_data) > 252
+        else stock_data.iloc[0]["Close"]
+    )
     price_difference = latest_price - previous_year_price
     percentage_difference = (price_difference / previous_year_price) * 100
     return price_difference, percentage_difference
@@ -65,7 +64,6 @@ def app():
     """
     Main Streamlit application function.
     """
-    # -- BOLIERPLATE -- #
     st.set_page_config(page_title="Stock Dashboard", layout="wide", page_icon="📈")
     hide_menu_style = "<style> footer {visibility: hidden;} </style>"
     st.markdown(hide_menu_style, unsafe_allow_html=True)
@@ -87,8 +85,7 @@ def app():
         with col1:
             st.metric("Close Price", f"${latest_close_price:.2f}")
         with col2:
-            st.metric("Price Difference (YoY)", f"${price_difference:.2f}", 
-            f"{percentage_difference:+.2f}%")
+            st.metric("Price Difference (YoY)", f"${price_difference:.2f}", f"{percentage_difference:+.2f}%")
         with col3:
             st.metric("52-Week High", f"${max_52_week_high:.2f}")
         with col4:
@@ -96,24 +93,28 @@ def app():
 
     st.subheader("Candlestick Chart")
     candlestick_chart = go.Figure(
-    data=[
-        go.Candlestick(
-            x=stock_data.index,
-            open=stock_data['Open'],
-            high=stock_data['High'],
-            low=stock_data['Low'],
-            close=stock_data['Close']
-        )
-    ])
-    
-    candlestick_chart.update_layout(title=f"{symbol} Candlestick Chart", 
-    xaxis_rangeslider_visible=False)
+        data=[
+            go.Candlestick(
+                x=stock_data.index,
+                open=stock_data['Open'],
+                high=stock_data['High'],
+                low=stock_data['Low'],
+                close=stock_data['Close']
+            )
+        ]
+    )
+    candlestick_chart.update_layout(title=f"{symbol} Candlestick Chart", xaxis_rangeslider_visible=False)
     st.plotly_chart(candlestick_chart, use_container_width=True)
 
     st.subheader("Summary")
     st.dataframe(stock_data.tail())
 
-    st.download_button("Download Stock Data Overview", stock_data.to_csv(index=True),
-    file_name=f"{symbol}_stock_data.csv", mime="text/csv")
+    st.download_button(
+        "Download Stock Data Overview",
+        stock_data.to_csv(index=True),
+        file_name=f"{symbol}_stock_data.csv",
+        mime="text/csv"
+    )
+
 if __name__ == "__main__":
     app()
