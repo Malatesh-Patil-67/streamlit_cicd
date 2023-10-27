@@ -27,13 +27,9 @@ jobs:
           pylint data.py
         working-directory: ./  
 
-      - name: Test Streamlit App
-        run: |
-          pip install streamlit
-          pip install streamlit-pandas-profiling   
-          streamlit test test_data.py  
+      - name: Run pytest
+        run: pytest test_data.py
         working-directory: ./
-      
 
       - name: Build Docker image
         run: docker build -t my-streamlit-app:latest .
