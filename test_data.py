@@ -2,7 +2,7 @@ import re
 import requests
 import pandas as pd
 from data import calculate_price_difference
-
+from data import get_stock_data
 
 #def test_stock_data_app():
     # Test Case 1: Check if the app loads without errors
@@ -17,3 +17,9 @@ def test_calculate_price_difference():
     price_diff, percentage_diff = calculate_price_difference(data)
     assert price_diff == 10.0
     assert percentage_diff == 10.0
+
+def test_invalid_stock_symbol():
+    symbol = "INVALID"  
+    data = get_stock_data(symbol)
+    assert data is None
+

@@ -26,6 +26,10 @@ def get_stock_data(symbol, time_range="5y"):
         params=params,
         timeout=10
     )
+    if response.status_code != 200:
+        st.error(f"Error: {response.status_code}")
+        return None
+    
     data = response.json()
 
     if "error" in data:
