@@ -27,6 +27,12 @@ jobs:
           pylint data.py
         working-directory: ./  
 
+      - name: Run Pytest
+        run: |
+          pip install pytest
+          pytest test_data.py
+        working-directory: ./ 
+
       - name: Build Docker image
         run: docker build -t my-streamlit-app:latest .
         working-directory: .  
