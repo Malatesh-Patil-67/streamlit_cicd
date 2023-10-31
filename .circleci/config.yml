@@ -1,0 +1,52 @@
+version: 2.1
+
+jobs:
+  build-and-deploy:
+    docker:
+      - image: python:3.9 # Use an appropriate Python version
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install Python Dependencies
+          command: |
+            pip install -r requirements.txt
+            pip install pylint pytest
+          working_directory: ./ 
+
+      - run:
+          name: Run Pylint
+          command: pylint data.py
+          working_directory: . 
+
+      - run:
+          name: Run Pytest
+          command: pytest test_data.py
+          working_directory: .
+
+      - run:
+          name: Build Docker image
+          command: docker build -t my-streamlit-app:latest .
+          working_directory: . 
+
+      - run:
+          name: Push Docker image to Docker Hub
+          command: |
+            echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin
+            docker tag my-streamlit-app:latest $DOCKERHUB_USERNAME/my-streamlit-app:latest
+            docker push $DOCKERHUB_USERNAME/my-streamlit-app:latest
+          working_directory: . 
+
+      - run:
+          name: Deploy to Docker
+          command: docker run -d -p 8503:8501 $DOCKERHUB_USERNAME/my-streamlit-app:latest
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build-and-deploy:
+          context:
+            - DOCKERHUB_USERNAME
+            - DOCKERHUB_TOKEN
