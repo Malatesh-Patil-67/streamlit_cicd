@@ -86,9 +86,10 @@ def app():
             min_52_week_low = None
 
         col1, col2, col3, col4 = st.columns(4)
-        with col1:st.metric("Close Price",
-            f"${latest_close_price:.2f}" if latest_close_price is not None else "N/A"
-        )
+        with col1:
+         st.metric("Close Price",
+               f"${latest_close_price:.2f}" if latest_close_price is not None else "N/A"
+              )
         with col2:
             st.metric(
                 "Price Difference (YoY)", f"${price_difference:.2f}"
