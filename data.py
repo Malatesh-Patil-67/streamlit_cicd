@@ -60,18 +60,18 @@ def calculate_price_difference(stock_data):
     return price_difference, percentage_difference
 
 def app():
-     """
+    """    
      Main Streamlit application function.
-     """
-     st.set_page_config(page_title="Stock Dashboard", layout="wide", page_icon="📈")
-     hide_menu_style = "<style> footer {visibility: hidden;} </style>"
-     st.markdown(hide_menu_style, unsafe_allow_html=True)
+    """
+    st.set_page_config(page_title="Stock Dashboard", layout="wide", page_icon="📈")
+    hide_menu_style = "<style> footer {visibility: hidden;} </style>"
+    st.markdown(hide_menu_style, unsafe_allow_html=True)
+    st.title("📈 Stock Dashboard")
 
-     st.title("📈 Stock Dashboard")
-     popular_symbols = ["AAPL", "GOOGL", "MSFT", "AMZN", "TSLA", "FB", "BRK-B", "V", "NVDA", "JPM"]
-     symbol = st.sidebar.selectbox("Select a stock symbol:", popular_symbols, index=2)
+    popular_symbols = ["AAPL", "GOOGL", "MSFT", "AMZN", "TSLA", "FB", "BRK-B", "V", "NVDA", "JPM"]
+    symbol = st.sidebar.selectbox("Select a stock symbol:", popular_symbols, index=2)
 
-     if symbol:
+    if symbol:
         stock_data = get_stock_data(symbol)
         if stock_data is not None:
             price_difference, percentage_difference = calculate_price_difference(stock_data)
@@ -92,8 +92,8 @@ def app():
         with col4:
             st.metric("52-Week Low", f"${min_52_week_low:.2f}" if min_52_week_low is not None else "N/A")
 
-     st.subheader("Candlestick Chart")
-     if stock_data is not None:
+    st.subheader("Candlestick Chart")
+    if stock_data is not None:
         candlestick_chart = go.Figure(
         data=[
             go.Candlestick(
@@ -107,11 +107,11 @@ def app():
                                     xaxis_rangeslider_visible=False)
         st.plotly_chart(candlestick_chart, use_container_width=True)
 
-     st.subheader("Summary")
-     if stock_data is not None:
+    st.subheader("Summary")
+    if stock_data is not None:
         st.dataframe(stock_data.tail())
 
-     if stock_data is not None:
+    if stock_data is not None:
         st.download_button(
             "Download Stock Data Overview",
             stock_data.to_csv(index=True),
