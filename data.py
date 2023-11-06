@@ -47,7 +47,9 @@ def get_stock_data(symbol, time_range="5y"):
         return None
 
 def calculate_price_difference(stock_data):
-    
+    """
+    Calculate price difference
+    """
     if stock_data is None:
         return None, None
     latest_price = stock_data.iloc[-1]["Close"]
@@ -62,8 +64,8 @@ def calculate_price_difference(stock_data):
 
 def app():
      """
-    Main Streamlit application function.
-    """
+     Main Streamlit application function.
+     """
      st.set_page_config(page_title="Stock Dashboard", layout="wide", page_icon="📈")
      hide_menu_style = "<style> footer {visibility: hidden;} </style>"
      st.markdown(hide_menu_style, unsafe_allow_html=True)
