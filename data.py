@@ -79,7 +79,11 @@ def app():
             max_52_week_high = stock_data["High"].tail(252).max()
             min_52_week_low = stock_data["Low"].tail(252).min()
         else:
-         price_difference = percentage_difference = latest_close_price = max_52_week_high = min_52_week_low = None
+            price_difference = \
+            percentage_difference = \
+            latest_close_price = \
+            max_52_week_high = \
+            min_52_week_low = None
 
         col1, col2, col3, col4 = st.columns(4)
         with col1:st.metric(
