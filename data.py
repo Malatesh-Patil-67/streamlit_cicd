@@ -6,7 +6,7 @@ import requests
 import plotly.graph_objs as go
 import streamlit as st
 
-# Constants for your API
+# API
 API_KEY = st.secrets["api"]["iex_key"]
 API_BASE_URL = "https://cloud.iexapis.com/stable/"
 
