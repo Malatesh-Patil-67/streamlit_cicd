@@ -14,7 +14,7 @@ def get_stock_data(symbol, time_range="5y"):
     Retrieve historical stock data for a given symbol.
 
     Args:
-        symbol (str): The stock symbol (e.g., AAPL for Apple Inc.).
+         symbol (str): The stock symbol (e.g., AAPL for Apple Inc.).
         time_range (str): The time range for data (default is "5y" for 5 years).
 
     Returns:
