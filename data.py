@@ -1,4 +1,3 @@
-
 """
 This module provides functions to retrieve and analyze historical stock data.
 """
@@ -7,6 +6,7 @@ import requests
 import plotly.graph_objs as go
 import streamlit as st
 
+# Constants for your API
 API_KEY = st.secrets["api"]["iex_key"]
 API_BASE_URL = "https://cloud.iexapis.com/stable/"
 
@@ -15,7 +15,7 @@ def get_stock_data(symbol, time_range="5y"):
     Retrieve historical stock data for a given symbol.
 
     Args:
-         symbol (str): The stock symbol (e.g., AAPL for Apple Inc.).
+        symbol (str): The stock symbol (e.g., AAPL for Apple Inc.).
         time_range (str): The time range for data (default is "5y" for 5 years).
 
     Returns:
@@ -28,7 +28,7 @@ def get_stock_data(symbol, time_range="5y"):
             params=params,
             timeout=10
         )
-        response.raise_for_status()  # Raise an exception for unsuccessful HTTP status codes
+        response.raise_for_status()
 
         data = response.json()
 
@@ -50,14 +50,11 @@ def calculate_price_difference(stock_data):
     """
     Calculate price difference
     """
-    if stock_data is None:
+    if stock_data is None or len(stock_data) < 252:
         return None, None
+
     latest_price = stock_data.iloc[-1]["Close"]
-    previous_year_price = (
-        stock_data.iloc[-252]["Close"]
-        if len(stock_data) > 252
-        else stock_data.iloc[0]["Close"]
-    )
+    previous_year_price = stock_data.iloc[-252]["Close"]
     price_difference = latest_price - previous_year_price
     percentage_difference = (price_difference / previous_year_price) * 100
     return price_difference, percentage_difference
@@ -114,12 +111,13 @@ def app():
      if stock_data is not None:
         st.dataframe(stock_data.tail())
 
-     st.download_button(
-        "Download Stock Data Overview",
-        stock_data.to_csv(index=True),
-        file_name=f"{symbol}_stock_data.csv",
-        mime="text/csv"
-    )
+     if stock_data is not None:
+        st.download_button(
+            "Download Stock Data Overview",
+            stock_data.to_csv(index=True),
+            file_name=f"{symbol}_stock_data.csv",
+            mime="text/csv"
+        )
 
 if __name__ == "__main__":
     app()
