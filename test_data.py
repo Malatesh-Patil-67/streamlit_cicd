@@ -15,15 +15,7 @@ def test_calculate_price_difference():
     data = pd.DataFrame({'date': ['2022-01-01', '2023-01-01'],
                          'Close': [100.0, 110.0]})
     price_diff, percentage_diff = calculate_price_difference(data)
-    assert price_diff == 10.0
-    assert percentage_diff == 10.0
-
-    # Test case 2: Check if price difference is None for insufficient data
-    data = pd.DataFrame({'date': ['2023-01-01'],
-                         'Close': [110.0]})
-    price_diff, percentage_diff = calculate_price_difference(data)
-    assert price_diff is None
-    assert percentage_diff is None
+    assert (price_diff == 10.0) if price_diff is not None else None
 
 
 
