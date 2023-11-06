@@ -48,13 +48,13 @@ def get_stock_data(symbol, time_range="5y"):
 
 def calculate_price_difference(stock_data):
     """
-    Calculate price difference
+    Calculate price difference.
     """
-    if stock_data is None or len(stock_data) < 252:
+    if stock_data is None or len(stock_data) < 2:
         return None, None
 
     latest_price = stock_data.iloc[-1]["Close"]
-    previous_year_price = stock_data.iloc[-252]["Close"]
+    previous_year_price = stock_data.iloc[0]["Close"]
     price_difference = latest_price - previous_year_price
     percentage_difference = (price_difference / previous_year_price) * 100
     return price_difference, percentage_difference
