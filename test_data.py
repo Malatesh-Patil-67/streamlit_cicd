@@ -19,13 +19,10 @@ def test_get_stock_data():
     assert data is not None
     assert isinstance(data, pd.DataFrame)
 
-  # Test case 2: Check if data for a non-existent symbol is handled properly
+#Test to check data for non-existent symbol 
     symbol = "XYZ"
     data = get_stock_data(symbol)
-    assert data is None        
-
-
-
+    assert data is None
 
 
 
