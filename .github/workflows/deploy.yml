@@ -48,10 +48,10 @@ jobs:
       - name: Prepare artifacts
         run: |
             mkdir -p artifacts
-            # Save your artifacts (e.g., text files, reports, generated data) to the "artifacts" directory
-            echo "This is an example artifact file." > artifacts/example.txt
             
-            working-directory: ./ 
+            echo "This is an example artifact file." > artifacts/example.txt
+
+        working-directory: ./ 
   
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
