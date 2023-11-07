@@ -120,7 +120,7 @@ def app():
                                     xaxis_rangeslider_visible=False)
         st.plotly_chart(candlestick_chart, use_container_width=True)
 
-    st.subheader("Summary")
+    st.subheader("Summary of last 5 days")
     if stock_data is not None:
         st.dataframe(stock_data.tail())
 
