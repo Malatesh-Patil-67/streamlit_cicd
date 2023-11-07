@@ -50,8 +50,7 @@ jobs:
             mkdir -p artifacts
             
             echo "This is an example artifact file." > artifacts/example.txt
-
-        working-directory: ./ 
+        working-directory: .
   
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
