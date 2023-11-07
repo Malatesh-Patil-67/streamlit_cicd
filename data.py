@@ -19,7 +19,7 @@ def get_stock_data(symbol, time_range="5y"):
         time_range (str): The time range for data (default is "5y" for 5 years).
 
     Returns:
-        pd.DataFrame: A DataFrame containing historical stock data.
+        A DataFrame containing historical stock data.
     """
     try:
         params = {"token": API_KEY}

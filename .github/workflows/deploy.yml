@@ -44,6 +44,20 @@ jobs:
           echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker tag my-streamlit-app:latest ${{ secrets.DOCKERHUB_USERNAME }}/my-streamlit-app:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-streamlit-app:latest
+
+      - name: Prepare artifacts
+        run: |
+            mkdir -p artifacts
+            # Save your artifacts (e.g., text files, reports, generated data) to the "artifacts" directory
+            echo "This is an example artifact file." > artifacts/example.txt
+            
+            working-directory: ./ 
+  
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v2
+        with:
+            name: my-artifacts
+            path: ./artifacts
           
           
       - name: Deploy to Docker
