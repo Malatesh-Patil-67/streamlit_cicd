@@ -12,6 +12,19 @@ def test_calculate_price_difference():
         assert price_diff == 10.0
         assert percentage_diff == 10.0
 
+def test_get_stock_data():
+    # Test case 1: Check if valid data is returned
+    symbol = "AAPL"
+    data = get_stock_data(symbol)
+    assert data is not None
+    assert isinstance(data, pd.DataFrame)
+
+  # Test case 2: Check if data for a non-existent symbol is handled properly
+    symbol = "XYZ"
+    data = get_stock_data(symbol)
+    assert data is None        
+
+
 
 
 
