@@ -23,6 +23,7 @@ def test_get_stock_data():
     symbol = "XYZ"
     data = get_stock_data(symbol)
     assert data is None
+    
 
 
 
