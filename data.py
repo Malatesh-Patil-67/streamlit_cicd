@@ -131,6 +131,11 @@ def app():
             file_name=f"{symbol}_stock_data.csv",
             mime="text/csv"
         )
+    st.markdown(
+        """
+        ---
+        *Note: This is a Streamlit demo app. The stock data is for demonstration purposes only.*
+        """
+    )
 if __name__ == "__main__":
     app()
-    
