@@ -134,7 +134,7 @@ def app():
     st.markdown(
         """
         ---
-        *Note: This is a Streamlit demo app. The stock data is for demonstration purposes only.*
+         This is a Streamlit demo app. The stock data is for demonstration purposes only.*
         """
     )
 if __name__ == "__main__":
