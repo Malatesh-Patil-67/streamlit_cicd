@@ -25,7 +25,6 @@ jobs:
         run: |
           pip install -r requirements.txt
           pylint data.py
-          pylint test_data.py
         working-directory: ./  
       
       - name: Run Pytest

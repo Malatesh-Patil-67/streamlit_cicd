@@ -19,10 +19,10 @@ def test_get_stock_data():
     """    
     Test case 1: Check if valid data is returned
     """
-symbol = "AAPL"
-data = get_stock_data(symbol)
-assert data is not None
-assert isinstance(data, pd.DataFrame) 
-symbol = "XYZ"
-data = get_stock_data(symbol)
-assert data is None
+    symbol = "AAPL"
+    data = get_stock_data(symbol)
+    assert data is not None
+    assert isinstance(data, pd.DataFrame) 
+    symbol = "XYZ"
+    data = get_stock_data(symbol)
+    assert data is None
