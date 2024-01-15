@@ -15,3 +15,9 @@ Push Docker image to Docker Hub: The workflow pushes the Docker image to Docker 
 <img width="1440" alt="Screenshot 2024-01-06 at 12 52 57" src="https://github.com/Malatesh-Patil-67/streamlit/assets/107174504/a43ceed1-5e1f-462d-9de4-1e30e4e4c4c5">
 
 
+
+
+![image](https://github.com/Malatesh-Patil-67/streamlit_cicd/assets/107174504/113d1a2c-17ed-48ef-b9b1-84dacfb99a10)
+
+
+
