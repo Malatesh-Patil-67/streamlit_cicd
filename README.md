@@ -16,8 +16,8 @@ Push Docker image to Docker Hub: The workflow pushes the Docker image to Docker 
 
 
 
+![image](https://github.com/Malatesh-Patil-67/streamlit_cicd/assets/107174504/d7000042-138e-4c59-82bd-1cb474a9b764)
 
-![image](https://github.com/Malatesh-Patil-67/streamlit_cicd/assets/107174504/113d1a2c-17ed-48ef-b9b1-84dacfb99a10)
 
 
 
